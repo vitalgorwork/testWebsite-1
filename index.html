@@ -1,68 +1,94 @@
-<head>	
-	<!-- Signals Gateway Pixel Code -->
-  <script>
-  !function(a,h,e,v,n,t,s)
-    {if(a.cbq)return;n=a.cbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!a._cbq)a._cbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=h.createElement(e);t.async=!0;
-    t.src=v;s=h.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://static.vg-em-sg-eks220-jun-12.vitaliy.cbinternal.com/sdk/1271199927691717091/events.js');
-    cbq('setHost', 'https://vg-em-sg-eks220-jun-12.vitaliy.cbinternal.com/');
-    cbq('init', '1271199927691717091');
-    cbq('track', 'PageView');
-  </script>
-    <!-- End Signals Gateway Pixel Code -->
-	<meta name="facebook-domain-verification" content="qowwrhpyni79cf2pms3zixyrxoh3b4" />
-	<title>pixel test page</title>
-	</head>
-	<body>
-	<h2>pixel test page Website-1</h2>
-	<div>
-	<ul>
-	<li><button id="addToWishlistButton" type="button">Add to Wishlist</button></li>
-	<li><button id="addToCartButton" type="button">Add to Cart</button></li>
-	<li><button id="checkoutButton" type="button">Check Out</button></li>
-	<li><button id="purchaseButton" type="button">Purchase</button></li>
-	<li><button id="subcribeButton" type="button">Subscribe</button></li>
-	<li><button id="registrationButton" type="button">Registration</button></li>
-	<li><button id="unWantedEvent_button" type="button">unWantedEvent</button></li>
-	
-	</ul>
-	</div>
-	
-	<script type="text/javascript">
-	document.getElementById('addToWishlistButton').addEventListener('click', function() {
-	cbq('track', 'Contact');
-	}, false);
-	
-	document.getElementById('addToCartButton').addEventListener('click', function() {
-	cbq('track', 'CustomEvents2');
-	}, false);
-	
-	document.getElementById('checkoutButton').addEventListener('click', function() {
-	cbq('track', 'InitiateCheckout');
-	}, false);
-	
-	document.getElementById('purchaseButton').addEventListener('click', function() {
-	cbq('track', 'Purchase', {
-	value: "fsdgdfg",
-	currency: 'USD',
-	});
-	}, false);
-	
-	document.getElementById('subcribeButton').addEventListener('click', function() {
-	cbq('track', 'Subscribe');
-	}, false);
-	
-	document.getElementById('registrationButton').addEventListener('click', function() {
-	cbq('track', 'CompleteRegistration');
-	}, false);
-	
-	document.getElementById('unWantedEvent_button').addEventListener('click', function() {
-	cbq('track', 'unWantedEvent');
-	}, false);
-	
-	</script>
-	</body>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Бизнес-класс по всему миру</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-image: url('https://yourserver.com/bg-business-class.jpg'); /* заменить на актуальный фон */
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.65);
+      padding: 40px;
+      max-width: 700px;
+      margin: 100px auto;
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 30px;
+      font-weight: normal;
+      color: #ddd;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 30px;
+    }
+
+    ul li::before {
+      content: "• ";
+      color: gold;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #e2b873;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #d0a85e;
+    }
+
+    .contact {
+      margin-top: 25px;
+      font-size: 16px;
+    }
+
+    .highlight {
+      color: #f9c66f;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>БИЗНЕС-КЛАСС ПО ВСЕМУ МИРУ</h1>
+    <h2>СПОКОЙСТВИЕ. КОМФОРТ. ПРЕСТИЖ.</h2>
+    <ul>
+      <li>Билеты бизнес-класса на любые авиалинии и направления</li>
+      <li>Emirates, Qatar, Turkish, Lufthansa, Aeroflot и другие</li>
+      <li>Москва – Дубай / Нью-Йорк / Мальдивы / Токио</li>
+      <li>Специальные тарифы и гибкие условия</li>
+      <li>Персональный подбор маршрута</li>
+      <li>Онлайн-бронирование и оплата</li>
+    </ul>
+    <a class="btn" href="https://ваш-сайт.рф/bookings" target="_blank">ЗАБРОНИРОВАТЬ</a>
+
+    <div class="contact">
+      Пишите в Telegram: <span class="highlight">@yau_uzepneim</span><br>
+      Или оформите запрос на сайте
+    </div>
+  </div>
+</body>
+</html>
