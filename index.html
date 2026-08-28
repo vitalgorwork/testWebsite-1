@@ -1,100 +1,1202 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<!-- ---------------------------------------------------------------------------------- -->
-<!-- Facebook Pixel Code -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '1568372224784453');
-    </script>
-  <!-- End Facebook Pixel Code -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RunPeak — Premium Running Gear</title>
 
-<!-- Signals Gateway Pixel -->
-    <script>
-      function assign(t){for(var i=1;i<arguments.length;i++){var s=arguments[i];if(s)for(var k in s)if(Object.prototype.hasOwnProperty.call(s,k))t[k]=s[k]}return t;}
-      !(function(f,b,e,vv,n,nn,tt,ss){
-        if (!f.cbq){nn = f.cbq = function(){nn.initialized ? nn.apply(f.cbq, arguments) : nn.queue.push(arguments);};
-        if(!f._cbq) f._cbq = nn;
-        nn.push = nn; nn.loaded = !0; nn.version = '2.0'; nn.queue = [];
-        tt = b.createElement(e); tt.async = !0; tt.src = vv; ss=b.getElementsByTagName(e)[0]; ss.parentNode.insertBefore(tt,ss);}
-        if (f.xbq) return; if (f.fbq) f.xbq=f.fbq;
-        n = f.fbq = function()
-        { var args = Array.prototype.slice.call(arguments);
-          var m = args[0]; var isT = m === 'track' || m === 'trackCustom'; var isS = m === 'trackSingle' || m === 'trackSingleCustom';
-          var mId = args[isT?1:2] + "." + Date.now() + Math.random().toString(36);
-          if (isT && args.length < 4)
-            arguments = args.concat((args.length < 3 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-          else if (isS && arguments.length < 5)
-            arguments = args.concat((args.length < 4 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-          if (isT && (!arguments[3] || !arguments[3].eventID)) arguments[3] = assign({}, arguments[3] || {}, { eventID: mId });
-          if (isS && (!arguments[4] || !arguments[4].eventID)) arguments[4] = assign({}, arguments[4] || {}, { eventID: mId });
-          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-          if (typeof m === 'string' && m.indexOf('track') === 0) {
-            if (isS) {
-              for (var newArgs = [arguments[0] === "trackSingle" ? "track" : "trackCustom"], i = 2; i < arguments.length; i++) newArgs.push(arguments[i]);
-              arguments = newArgs;
-            }
-            if (arguments[1]) (f.cbq.initialized ? f.cbq.apply(f.cbq, arguments) : f.cbq.queue.push(arguments));}
+  <!-- ======================== META PIXEL ======================== -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    // Generate or retrieve a persistent external_id for this visitor.
+    // This ID is stored in localStorage so it remains consistent across
+    // sessions and page reloads, which is required by Meta's documentation
+    // to ensure cross-channel consistency.
+    (function() {
+      var STORAGE_KEY = 'rpk_external_id';
+      var externalId = localStorage.getItem(STORAGE_KEY);
+      if (!externalId) {
+        // Generate a UUID v4
+        if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+          externalId = crypto.randomUUID();
+        } else {
+          // Fallback for older browsers
+          externalId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0;
+            var v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+          });
         }
-        if(!f._fbq) f._fbq = n;
-        n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = (f.xbq)?f.xbq.queue:[];
-      })
-      (window, document, 'script', 'https://vg-gcp-aug13.cb6internal.org/sdk/5655627291365719422/events.js');
-      cbq('setHost', 'https://vg-gcp-aug13.cb6internal.org/');
-    cbq('init', '5655627291365719422');
-      cbq('set', 'integrationMethod', 'forkFromSnippetCode@1.0');
-      fbq('track', 'PageView');
-    </script>
-  <!-- End Signals Gateway Pixel -->
-<!-- ---------------------------------------------------------------------------------- -->
-<!-- Modified FBQ body Code -->
-<meta name="facebook-domain-verification" content="qowwrhpyni79cf2pms3zixyrxoh3b4" />
-<title>pixel test page</title>
+        localStorage.setItem(STORAGE_KEY, externalId);
+      }
+      // Store on window so it can be referenced by event-firing code below
+      window.__rpk_external_id = externalId;
+    })();
+
+    // Initialize Meta Pixel with external_id as an advanced matching parameter.
+    // Per Meta docs, external_id in the fbq('init') call is automatically
+    // included with every subsequent event fire (PageView, AddToCart, etc.).
+    fbq('init', '984941143988609', {
+      external_id: window.__rpk_external_id
+    });
+    fbq('track', 'PageView');
+
+    /* ═══════════════════════════════════════════
+       META CONVERSIONS API (CAPI) — Helper
+       Posts events to our own backend (/api/capi), which attaches the
+       access_token server-side and forwards them to Meta. The token is
+       never exposed to the browser.
+    ═══════════════════════════════════════════ */
+    (function() {
+      var CAPI_ENDPOINT = '/api/capi';
+
+      /**
+       * Send a Conversions API event through our backend.
+       * @param {string}  eventName   - Standard event name (PageView, AddToCart, etc.)
+       * @param {object}  customData  - Event-specific custom_data payload
+       * @param {string}  [eventId]   - Optional event_id for Pixel↔CAPI deduplication
+       */
+      window.__rpk_sendCAPI = function(eventName, customData, eventId) {
+        try {
+          var payload = {
+            event_name: eventName,
+            event_source_url: window.location.href,
+            user_data: {
+              // The backend also SHA-256 hashes this via the SDK.
+              externalId: window.__rpk_external_id
+            }
+          };
+          if (customData && Object.keys(customData).length > 0) {
+            payload.custom_data = customData;
+          }
+          if (eventId) {
+            payload.event_id = eventId;
+          }
+
+          var body = JSON.stringify(payload);
+
+          // Prefer fetch so we get a proper response (useful when the server
+          // generates an event_id and we want to pipe it back into fbq).
+          // Fallback to sendBeacon on page unload scenarios.
+          if (typeof fetch === 'function') {
+            fetch(CAPI_ENDPOINT, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: body,
+              credentials: 'same-origin',
+              keepalive: true
+            }).catch(function() { /* silently fail */ });
+          } else if (navigator.sendBeacon) {
+            navigator.sendBeacon(
+              CAPI_ENDPOINT,
+              new Blob([body], { type: 'application/json' })
+            );
+          }
+
+          console.log('[CAPI] Sent ' + eventName + ' to backend');
+        } catch (err) {
+          console.warn('[CAPI] Failed to send ' + eventName + ':', err);
+        }
+      };
+
+      // Fire the PageView CAPI event immediately
+      window.__rpk_sendCAPI('PageView', {});
+    })();
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=984941143988609&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- ==================== END META PIXEL ======================== -->
+
+  <style>
+    /* ─── CSS Reset & Variables ─── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #e63946;
+      --primary-dark: #c1121f;
+      --dark: #1d1d2c;
+      --dark2: #2b2d42;
+      --light: #f8f9fa;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+      --white: #ffffff;
+      --shadow: 0 4px 24px rgba(0,0,0,.08);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.12);
+      --radius: 12px;
+      --transition: .3s ease;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; border: none; font-family: inherit; }
+    ul { list-style: none; }
+
+    /* ─── Utility ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: .4em;
+      color: var(--dark);
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--gray);
+      margin-bottom: 2.5em;
+      font-size: 1.05rem;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: .95rem;
+      transition: var(--transition);
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(230,57,70,.35); }
+    .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+    .btn-outline:hover { background: var(--primary); color: #fff; }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-sale { background: var(--primary); color: #fff; }
+    .badge-new { background: #2ec4b6; color: #fff; }
+    .badge-hot { background: #ff9f1c; color: #fff; }
+
+    /* ─── Announcement Bar ─── */
+    .announcement {
+      background: var(--dark);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: .85rem;
+      letter-spacing: .5px;
+    }
+    .announcement strong { color: var(--primary); }
+
+    /* ─── Header / Navbar ─── */
+    header {
+      background: var(--white);
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .logo {
+      font-size: 1.6rem; font-weight: 900;
+      color: var(--dark);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-weight: 600; font-size: .95rem;
+      color: var(--dark2);
+      position: relative;
+      transition: var(--transition);
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px; background: var(--primary);
+      transition: var(--transition);
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-actions { display: flex; align-items: center; gap: 18px; }
+    .nav-actions button {
+      background: none; font-size: 1.3rem; position: relative;
+      color: var(--dark2); transition: var(--transition);
+    }
+    .nav-actions button:hover { color: var(--primary); }
+    .cart-count {
+      position: absolute; top: -6px; right: -8px;
+      background: var(--primary); color: #fff;
+      font-size: .65rem; font-weight: 700;
+      width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; }
+    .hamburger span { display: block; width: 24px; height: 2.5px; background: var(--dark); border-radius: 2px; transition: var(--transition); }
+
+    /* ─── Hero ─── */
+    .hero {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+      color: #fff;
+      padding: 100px 20px 120px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -50%; right: -20%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(230,57,70,.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -30%; left: -10%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(46,196,182,.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(230,57,70,.2);
+      color: var(--primary);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: .85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero h1 { font-size: 3.2rem; font-weight: 900; line-height: 1.15; margin-bottom: 20px; }
+    .hero h1 span { color: var(--primary); }
+    .hero p { font-size: 1.15rem; color: rgba(255,255,255,.75); margin-bottom: 36px; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ─── Features Bar ─── */
+    .features-bar {
+      background: var(--white);
+      padding: 40px 20px;
+      box-shadow: var(--shadow);
+      position: relative; z-index: 2;
+      margin-top: -50px;
+      border-radius: var(--radius);
+      max-width: 1000px;
+      margin-left: auto; margin-right: auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+    .feature-item { padding: 10px; }
+    .feature-icon { font-size: 2rem; margin-bottom: 8px; }
+    .feature-item h4 { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .feature-item p { font-size: .8rem; color: var(--gray); }
+
+    /* ─── Categories ─── */
+    .categories { padding: 80px 20px 60px; }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .cat-card {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      height: 260px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .cat-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .cat-bg {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      transition: var(--transition);
+    }
+    .cat-card:hover .cat-bg { transform: scale(1.05); }
+    .cat-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 24px;
+      background: linear-gradient(transparent, rgba(0,0,0,.7));
+      color: #fff;
+    }
+    .cat-overlay h3 { font-size: 1.2rem; font-weight: 700; }
+    .cat-overlay p { font-size: .85rem; opacity: .85; }
+
+    /* ─── Products ─── */
+    .products { padding: 60px 20px 80px; }
+    .filter-bar {
+      display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 8px 22px;
+      border-radius: 50px;
+      font-size: .85rem;
+      font-weight: 600;
+      background: var(--gray-light);
+      color: var(--dark2);
+      transition: var(--transition);
+    }
+    .filter-btn.active, .filter-btn:hover { background: var(--primary); color: #fff; }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 28px;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .product-badges { position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; z-index: 2; }
+    .product-img {
+      height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      background: var(--gray-light);
+      position: relative;
+      overflow: hidden;
+    }
+    .product-actions {
+      position: absolute; bottom: -50px; left: 0; right: 0;
+      display: flex; justify-content: center; gap: 10px;
+      padding: 12px;
+      transition: var(--transition);
+    }
+    .product-card:hover .product-actions { bottom: 0; }
+    .action-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+      transition: var(--transition);
+    }
+    .action-btn:hover { background: var(--primary); color: #fff; }
+    .product-info { padding: 20px; }
+    .product-category { font-size: .75rem; color: var(--gray); text-transform: uppercase; font-weight: 600; letter-spacing: .5px; }
+    .product-name { font-size: 1.05rem; font-weight: 700; margin: 6px 0; }
+    .product-rating { display: flex; align-items: center; gap: 4px; margin-bottom: 10px; }
+    .stars { color: #ffc107; font-size: .85rem; }
+    .rating-count { font-size: .8rem; color: var(--gray); }
+    .product-price { display: flex; align-items: center; gap: 10px; }
+    .price-current { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
+    .price-old { font-size: .9rem; color: var(--gray); text-decoration: line-through; }
+    .product-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px 20px;
+    }
+    .add-cart-btn {
+      padding: 10px 20px;
+      border-radius: 50px;
+      background: var(--dark);
+      color: #fff;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    .add-cart-btn:hover { background: var(--primary); }
+
+    /* ─── Banner ─── */
+    .promo-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .promo-banner h2 { font-size: 2.4rem; font-weight: 900; margin-bottom: 12px; }
+    .promo-banner p { font-size: 1.1rem; opacity: .9; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .promo-banner .btn { background: #fff; color: var(--primary); }
+    .promo-banner .btn:hover { background: var(--dark); color: #fff; }
+
+    /* ─── Testimonials ─── */
+    .testimonials { padding: 80px 20px; background: var(--white); }
+    .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+    .test-card {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 32px;
+      position: relative;
+    }
+    .test-card::before {
+      content: '\201C';
+      font-size: 4rem;
+      color: var(--primary);
+      opacity: .2;
+      position: absolute;
+      top: 10px; left: 20px;
+      font-family: Georgia, serif;
+    }
+    .test-stars { color: #ffc107; margin-bottom: 12px; }
+    .test-text { font-size: .95rem; color: var(--dark2); margin-bottom: 20px; line-height: 1.7; }
+    .test-author { display: flex; align-items: center; gap: 12px; }
+    .test-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem;
+    }
+    .test-name { font-weight: 700; font-size: .9rem; }
+    .test-role { font-size: .8rem; color: var(--gray); }
+
+    /* ─── Newsletter ─── */
+    .newsletter {
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+      gap: 10px;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      border: 2px solid var(--gray-light);
+      border-radius: 50px;
+      font-size: .95rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .newsletter-form input:focus { border-color: var(--primary); }
+
+    /* ─── Footer ─── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.7);
+      padding: 60px 20px 30px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 40px;
+    }
+    .footer-brand .logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand p { font-size: .9rem; line-height: 1.7; }
+    .footer-col h4 { color: #fff; font-size: .95rem; margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: .88rem; margin-bottom: 10px; transition: var(--transition); }
+    .footer-col a:hover { color: var(--primary); }
+    .footer-social { display: flex; gap: 12px; margin-top: 16px; }
+    .footer-social a {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem;
+      transition: var(--transition);
+    }
+    .footer-social a:hover { background: var(--primary); color: #fff; }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      font-size: .82rem;
+    }
+    .payment-icons { display: flex; justify-content: center; gap: 12px; margin-top: 10px; font-size: 1.4rem; }
+
+    /* ─── Cart Drawer ─── */
+    .cart-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    .cart-overlay.open { opacity: 1; visibility: visible; }
+    .cart-drawer {
+      position: fixed; top: 0; right: -420px;
+      width: 400px; max-width: 90vw;
+      height: 100%;
+      background: var(--white);
+      z-index: 2001;
+      transition: .4s ease;
+      display: flex; flex-direction: column;
+    }
+    .cart-drawer.open { right: 0; }
+    .cart-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .cart-header h3 { font-size: 1.2rem; font-weight: 800; }
+    .cart-close { background: none; font-size: 1.4rem; }
+    .cart-items { flex: 1; overflow-y: auto; padding: 20px 24px; }
+    .cart-empty { text-align: center; padding: 60px 20px; color: var(--gray); }
+    .cart-empty-icon { font-size: 3rem; margin-bottom: 12px; }
+    .cart-item {
+      display: flex; gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .cart-item-img {
+      width: 70px; height: 70px;
+      background: var(--gray-light);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+    .cart-item-details { flex: 1; }
+    .cart-item-name { font-weight: 700; font-size: .9rem; margin-bottom: 4px; }
+    .cart-item-price { font-size: .85rem; color: var(--primary); font-weight: 600; }
+    .cart-item-qty {
+      display: flex; align-items: center; gap: 8px; margin-top: 8px;
+    }
+    .qty-btn {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--gray-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; font-weight: 700;
+      transition: var(--transition);
+    }
+    .qty-btn:hover { background: var(--primary); color: #fff; }
+    .qty-num { font-weight: 700; font-size: .9rem; min-width: 20px; text-align: center; }
+    .cart-item-remove { background: none; color: var(--gray); font-size: .8rem; margin-top: 4px; }
+    .cart-item-remove:hover { color: var(--primary); }
+    .cart-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--gray-light);
+    }
+    .cart-total {
+      display: flex; justify-content: space-between;
+      font-size: 1.1rem; font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .checkout-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 50px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+    .checkout-btn:hover { background: var(--primary-dark); }
+
+    /* ─── Toast ─── */
+    .toast {
+      position: fixed; bottom: 30px; right: 30px;
+      background: var(--dark);
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: var(--radius);
+      font-size: .9rem;
+      font-weight: 600;
+      z-index: 3000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.mobile-open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--white);
+        padding: 20px;
+        box-shadow: var(--shadow);
+        gap: 16px;
+      }
+      .hero h1 { font-size: 2.2rem; }
+      .hero { padding: 60px 20px 80px; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .newsletter-form { flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── Scroll Animations ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body> 
-<h2>Test page. Website # 1</h2>
-<div><ul>
-  <li><button id="addToWishlistButton" type="button">Add to Wishlist (x10)</button></li>
-  <li><button id="addToCartButton" type="button">Add to Cart (x10)</button></li>
-  <li><button id="checkoutButton" type="button">Check Out (x10)</button></li>
-  <li><button id="purchaseButton" type="button">Purchase (x10)</button></li>
-  <li><button id="subcribeButton" type="button">Subscribe (x10)</button></li>
-  <li><button id="registrationButton" type="button">Registration (x10)</button></li>
-</ul></div>
-<div><ul>
-  <li><button id="siteButton" type="button">Site 1 (x10)</button></li>          <!-- Site # -->
-  <li><button id="invalidpurchaseButton" type="button">Invalid Purchase (x10)</button></li>
-  <li><button id="searchButton" type="button">Search (x10)</button></li>
-  <li><button id="contactButton" type="button">Contact (x10)</button></li>
-  <li><button id="donateButton" type="button">Donate (x10)</button></li>
-  <li><button id="rateButton" type="button">Rate (x10)</button></li>
-  <li><button id="adClickButton" type="button">AdClick (x10)</button></li>
-  <li><button id="purchaseNoValueButton" type="button">Purchase With No Value (x10)</button></li>
-</ul></div>
-<script type="text/javascript">
-  for(var i = 0; i < 10; i++) {
-document.getElementById('siteButton').addEventListener('click', function() {fbq('track', 'Site1')}, false); 
-document.getElementById('addToWishlistButton').addEventListener('click', function() {fbq('track', 'AddToWishlist'); }, false);
-document.getElementById('addToCartButton').addEventListener('click', function() {fbq('track', 'AddToCart');}, false);
-document.getElementById('checkoutButton').addEventListener('click', function() {fbq('track', 'InitiateCheckout');}, false);
-document.getElementById('purchaseButton').addEventListener('click', function() {fbq('track', 'Purchase', {value: '12.34',currency: 'USD',});}, false);
-document.getElementById('subcribeButton').addEventListener('click', function() {fbq('track', 'Subscribe');}, false);
-document.getElementById('registrationButton').addEventListener('click', function() {fbq('track', 'CompleteRegistration');}, false);
-document.getElementById('invalidpurchaseButton').addEventListener('click', function() {fbq('track', 'Purchase', {value: 'fdsjflds',currency: 'USD',});}, false);
-document.getElementById('searchButton').addEventListener('click', function() {fbq('track', 'Search'); }, false);    
-document.getElementById('contactButton').addEventListener('click', function() {fbq('track', 'Contact'); }, false);    
-document.getElementById('donateButton').addEventListener('click', function() {fbq('track', 'Donate'); }, false);    
-document.getElementById('rateButton').addEventListener('click', function() {fbq('track', 'Rate'); }, false);    
-document.getElementById('adClickButton').addEventListener('click', function() {fbq('track', 'AdClick'); }, false);
-document.getElementById('purchaseNoValueButton').addEventListener('click', function() {fbq('track', 'Purchase', {currency: 'USD',});}, false);
-}
-</script>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement">
+    🏃 <strong>FREE SHIPPING</strong> on all orders over $75 &nbsp;|&nbsp; Use code <strong>RUN2026</strong> for 15% off your first order
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-inner">
+      <a href="#" class="logo">Run<span>Peak</span></a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#categories">Categories</a>
+        <a href="#products">Shop</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#newsletter">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button onclick="document.getElementById('searchBox').focus()" title="Search">🔍</button>
+        <button title="Wishlist">♡</button>
+        <button onclick="toggleCart()" title="Cart">🛒<span class="cart-count" id="cartCount">0</span></button>
+      </div>
+      <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('mobile-open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">🔥 New Spring 2026 Collection</span>
+      <h1>Run Faster. <span>Go Further.</span> Feel Unstoppable.</h1>
+      <p>Premium running shoes, energy gels, hydration gear, and everything you need to crush your next PR.</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn btn-primary">Shop Now →</a>
+        <a href="#categories" class="btn btn-outline" style="border-color:#fff;color:#fff;">Explore Categories</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Bar -->
+  <div class="features-bar container fade-up">
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">🚚</div>
+        <h4>Free Shipping</h4>
+        <p>On orders over $75</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">↩️</div>
+        <h4>Easy Returns</h4>
+        <p>30-day return policy</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔒</div>
+        <h4>Secure Payment</h4>
+        <p>100% protected checkout</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💬</div>
+        <h4>24/7 Support</h4>
+        <p>Expert running advice</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <section class="categories container" id="categories">
+    <h2 class="section-title fade-up">Shop by Category</h2>
+    <p class="section-sub fade-up">Everything you need from start line to finish line</p>
+    <div class="cat-grid">
+      <div class="cat-card fade-up" onclick="filterProducts('shoes')">
+        <div class="cat-bg" style="background:linear-gradient(135deg,#667eea,#764ba2);">👟</div>
+        <div class="cat-overlay">
+          <h3>Running Shoes</h3>
+          <p>Road, trail &amp; racing</p>
+        </div>
+      </div>
+      <div class="cat-card fade-up" onclick="filterProducts('nutrition')">
+        <div class="cat-bg" style="background:linear-gradient(135deg,#f093fb,#f5576c);">⚡</div>
+        <div class="cat-overlay">
+          <h3>Energy &amp; Nutrition</h3>
+          <p>Gels, bars &amp; drinks</p>
+        </div>
+      </div>
+      <div class="cat-card fade-up" onclick="filterProducts('gear')">
+        <div class="cat-bg" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">🎽</div>
+        <div class="cat-overlay">
+          <h3>Running Gear</h3>
+          <p>Apparel &amp; accessories</p>
+        </div>
+      </div>
+      <div class="cat-card fade-up" onclick="filterProducts('hydration')">
+        <div class="cat-bg" style="background:linear-gradient(135deg,#43e97b,#38f9d7);">💧</div>
+        <div class="cat-overlay">
+          <h3>Hydration</h3>
+          <p>Bottles, vests &amp; belts</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="products" id="products">
+    <div class="container">
+      <h2 class="section-title fade-up">Featured Products</h2>
+      <p class="section-sub fade-up">Hand-picked gear trusted by thousands of runners</p>
+      <div class="filter-bar fade-up">
+        <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+        <button class="filter-btn" onclick="filterProducts('shoes')">Shoes</button>
+        <button class="filter-btn" onclick="filterProducts('nutrition')">Nutrition</button>
+        <button class="filter-btn" onclick="filterProducts('gear')">Gear</button>
+        <button class="filter-btn" onclick="filterProducts('hydration')">Hydration</button>
+      </div>
+      <div class="products-grid" id="productsGrid">
+        <!-- Products injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Promo Banner -->
+  <section class="promo-banner fade-up">
+    <h2>Marathon Season is Here 🏅</h2>
+    <p>Get race-day ready with our curated marathon bundles — shoes, gels, and hydration packs at 20% off.</p>
+    <a href="#products" class="btn">Shop Bundles →</a>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <h2 class="section-title fade-up">What Runners Say</h2>
+      <p class="section-sub fade-up">Join 50,000+ happy runners worldwide</p>
+      <div class="test-grid">
+        <div class="test-card fade-up">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">The CloudStrike Pro completely changed my marathon experience. Incredibly responsive and lightweight — I PR'd by 8 minutes!</p>
+          <div class="test-author">
+            <div class="test-avatar">SL</div>
+            <div>
+              <div class="test-name">Sarah L.</div>
+              <div class="test-role">Marathon Runner</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card fade-up">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">Best energy gels I've ever used. No stomach issues, great taste, and the caffeine boost at mile 20 was a game-changer.</p>
+          <div class="test-author">
+            <div class="test-avatar">MK</div>
+            <div>
+              <div class="test-name">Mike K.</div>
+              <div class="test-role">Ultra Runner</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card fade-up">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">The hydration vest fits perfectly and doesn't bounce at all. I can carry everything I need for my long trail runs. Highly recommend!</p>
+          <div class="test-author">
+            <div class="test-avatar">JR</div>
+            <div>
+              <div class="test-name">Jessica R.</div>
+              <div class="test-role">Trail Runner</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter" id="newsletter">
+    <div class="container">
+      <h2 class="section-title fade-up">Join the RunPeak Community</h2>
+      <p class="section-sub fade-up">Get exclusive deals, training tips, and early access to new drops</p>
+      <form class="newsletter-form fade-up" onsubmit="handleSubscribe(event)">
+        <input type="email" id="searchBox" placeholder="Enter your email address" required />
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Run<span>Peak</span></div>
+        <p>Your one-stop shop for premium running gear. We're runners too — every product is tested on the road and trail.</p>
+        <div class="footer-social">
+          <a href="#">f</a>
+          <a href="#">𝕏</a>
+          <a href="#">in</a>
+          <a href="#">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="#">Running Shoes</a>
+        <a href="#">Energy Gels</a>
+        <a href="#">Hydration</a>
+        <a href="#">Apparel</a>
+        <a href="#">Accessories</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Shipping Info</a>
+        <a href="#">Returns</a>
+        <a href="#">Size Guide</a>
+        <a href="#">Track Order</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 RunPeak. All rights reserved.</p>
+      <div class="payment-icons">
+        <span>💳</span><span>🅿️</span><span>🍎</span><span>G</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Overlay & Drawer -->
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛒</div>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">$0.00</span>
+      </div>
+      <button class="checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ═══════════════════════════════════════════
+       PRODUCT DATA
+    ═══════════════════════════════════════════ */
+    const products = [
+      { id:1,  name:"CloudStrike Pro",         cat:"shoes",     price:179.99, old:219.99, badge:"sale", emoji:"👟", rating:4.9, reviews:1243, desc:"Carbon-plate road racer" },
+      { id:2,  name:"TrailBlazer X",           cat:"shoes",     price:159.99, old:null,   badge:"new",  emoji:"🥾", rating:4.8, reviews:876,  desc:"Aggressive trail grip" },
+      { id:3,  name:"SpeedLite Racer",         cat:"shoes",     price:139.99, old:169.99, badge:"sale", emoji:"👟", rating:4.7, reviews:654,  desc:"Lightweight tempo shoe" },
+      { id:4,  name:"UltraBoost Daily",        cat:"shoes",     price:149.99, old:null,   badge:null,   emoji:"👟", rating:4.6, reviews:2105, desc:"Everyday training shoe" },
+      { id:5,  name:"TurboGel Caffeine 6-Pack",cat:"nutrition", price:18.99,  old:24.99,  badge:"hot",  emoji:"⚡", rating:4.8, reviews:3421, desc:"100mg caffeine per gel" },
+      { id:6,  name:"EnduroGel Citrus 12-Pack", cat:"nutrition", price:29.99,  old:null,   badge:"new",  emoji:"🍊", rating:4.7, reviews:1890, desc:"Isotonic energy gel" },
+      { id:7,  name:"ProBar Recovery Box",     cat:"nutrition", price:34.99,  old:42.99,  badge:"sale", emoji:"🍫", rating:4.5, reviews:987,  desc:"20g protein per bar" },
+      { id:8,  name:"Electrolyte Tabs 30ct",   cat:"nutrition", price:12.99,  old:null,   badge:null,   emoji:"💊", rating:4.6, reviews:2340, desc:"Zero sugar hydration" },
+      { id:9,  name:"HydroVest Elite 1.5L",    cat:"hydration", price:89.99,  old:109.99, badge:"sale", emoji:"🎒", rating:4.9, reviews:567,  desc:"Race-ready hydration vest" },
+      { id:10, name:"SoftFlask 500ml 2-Pack",  cat:"hydration", price:24.99,  old:null,   badge:null,   emoji:"💧", rating:4.7, reviews:1456, desc:"Collapsible soft flask" },
+      { id:11, name:"Insulated Belt Bottle",   cat:"hydration", price:32.99,  old:null,   badge:"new",  emoji:"🧴", rating:4.5, reviews:432,  desc:"Keeps drinks cold 4hrs" },
+      { id:12, name:"Reflective Running Vest", cat:"gear",      price:39.99,  old:null,   badge:"new",  emoji:"🦺", rating:4.8, reviews:765,  desc:"360° visibility" },
+      { id:13, name:"GPS Running Watch",       cat:"gear",      price:249.99, old:299.99, badge:"sale", emoji:"⌚", rating:4.9, reviews:2890, desc:"Multi-sport GPS watch" },
+      { id:14, name:"Compression Socks 3-Pack",cat:"gear",      price:29.99,  old:null,   badge:"hot",  emoji:"🧦", rating:4.6, reviews:1678, desc:"Graduated compression" },
+      { id:15, name:"Running Belt Pro",        cat:"gear",      price:27.99,  old:34.99,  badge:"sale", emoji:"👝", rating:4.5, reviews:1234, desc:"Bounce-free phone belt" },
+      { id:16, name:"Foam Roller Recovery Kit", cat:"gear",      price:44.99,  old:null,   badge:null,   emoji:"🧘", rating:4.7, reviews:890,  desc:"3-density roller set" },
+    ];
+
+    let cart = [];
+    let currentFilter = 'all';
+
+    /* ═══════════════════════════════════════════
+       RENDER PRODUCTS
+    ═══════════════════════════════════════════ */
+    function renderProducts(filter) {
+      currentFilter = filter;
+      const grid = document.getElementById('productsGrid');
+      const filtered = filter === 'all' ? products : products.filter(p => p.cat === filter);
+
+      // Update filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase() === filter);
+      });
+
+      grid.innerHTML = filtered.map(p => `
+        <div class="product-card fade-up visible" data-cat="${p.cat}">
+          <div class="product-badges">
+            ${p.badge === 'sale' ? '<span class="badge badge-sale">Sale</span>' : ''}
+            ${p.badge === 'new' ? '<span class="badge badge-new">New</span>' : ''}
+            ${p.badge === 'hot' ? '<span class="badge badge-hot">Hot</span>' : ''}
+          </div>
+          <div class="product-img">
+            ${p.emoji}
+            <div class="product-actions">
+              <button class="action-btn" title="Quick View" onclick="showToast('Quick view coming soon!')">👁</button>
+              <button class="action-btn" title="Wishlist" onclick="showToast('Added to wishlist!')">♡</button>
+            </div>
+          </div>
+          <div class="product-info">
+            <div class="product-category">${p.cat}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-rating">
+              <span class="stars">${'★'.repeat(Math.floor(p.rating))}${p.rating % 1 >= 0.5 ? '½' : ''}</span>
+              <span class="rating-count">(${p.reviews.toLocaleString()})</span>
+            </div>
+            <div class="product-price">
+              <span class="price-current">$${p.price.toFixed(2)}</span>
+              ${p.old ? `<span class="price-old">$${p.old.toFixed(2)}</span>` : ''}
+            </div>
+          </div>
+          <div class="product-bottom">
+            <small style="color:var(--gray)">${p.desc}</small>
+            <button class="add-cart-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterProducts(cat) {
+      renderProducts(cat);
+      if (cat !== 'all') {
+        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       CART LOGIC
+    ═══════════════════════════════════════════ */
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      updateCart();
+      showToast(`${product.name} added to cart!`);
+
+      // Meta Pixel + CAPI: AddToCart event
+      var addToCartEventId = 'addtocart_' + product.id + '_' + Date.now();
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'AddToCart', {
+          content_name: product.name,
+          content_category: product.cat,
+          content_ids: [product.id],
+          content_type: 'product',
+          value: product.price,
+          currency: 'USD'
+        }, { eventID: addToCartEventId });
+      }
+      // Conversions API: AddToCart (same external_id, same event_id for dedup)
+      if (typeof window.__rpk_sendCAPI === 'function') {
+        window.__rpk_sendCAPI('AddToCart', {
+          content_name: product.name,
+          content_category: product.cat,
+          content_ids: [String(product.id)],
+          content_type: 'product',
+          value: product.price,
+          currency: 'USD'
+        }, addToCartEventId);
+      }
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      updateCart();
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) {
+          removeFromCart(id);
+          return;
+        }
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      const countEl = document.getElementById('cartCount');
+      const itemsEl = document.getElementById('cartItems');
+      const totalEl = document.getElementById('cartTotal');
+
+      const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+      const totalPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+      countEl.textContent = totalItems;
+      totalEl.textContent = `$${totalPrice.toFixed(2)}`;
+
+      if (cart.length === 0) {
+        itemsEl.innerHTML = `
+          <div class="cart-empty">
+            <div class="cart-empty-icon">🛒</div>
+            <p>Your cart is empty</p>
+          </div>`;
+        return;
+      }
+
+      itemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-img">${item.emoji}</div>
+          <div class="cart-item-details">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</div>
+            <div class="cart-item-qty">
+              <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart(${item.id})">Remove</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleCart() {
+      document.getElementById('cartOverlay').classList.toggle('open');
+      document.getElementById('cartDrawer').classList.toggle('open');
+    }
+
+    function handleCheckout() {
+      if (cart.length === 0) {
+        showToast('Your cart is empty!');
+        return;
+      }
+
+      const totalPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+      // Meta Pixel + CAPI: InitiateCheckout event
+      var checkoutEventId = 'checkout_' + Date.now();
+      var checkoutContentIds = cart.map(i => String(i.id));
+      var checkoutNumItems = cart.reduce((s, i) => s + i.qty, 0);
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'InitiateCheckout', {
+          content_ids: checkoutContentIds,
+          content_type: 'product',
+          num_items: checkoutNumItems,
+          value: totalPrice,
+          currency: 'USD'
+        }, { eventID: checkoutEventId });
+      }
+      // Conversions API: InitiateCheckout (same external_id, same event_id for dedup)
+      if (typeof window.__rpk_sendCAPI === 'function') {
+        window.__rpk_sendCAPI('InitiateCheckout', {
+          content_ids: checkoutContentIds,
+          content_type: 'product',
+          num_items: checkoutNumItems,
+          value: totalPrice,
+          currency: 'USD'
+        }, checkoutEventId);
+      }
+
+      showToast('Checkout initiated — thank you!');
+    }
+
+    /* ═══════════════════════════════════════════
+       NEWSLETTER
+    ═══════════════════════════════════════════ */
+    function handleSubscribe(e) {
+      e.preventDefault();
+      const email = e.target.querySelector('input').value;
+
+      // Meta Pixel + CAPI: Lead event
+      var leadEventId = 'lead_' + Date.now();
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', { content_name: 'Newsletter Signup' }, { eventID: leadEventId });
+      }
+      // Conversions API: Lead (same external_id, same event_id for dedup)
+      if (typeof window.__rpk_sendCAPI === 'function') {
+        window.__rpk_sendCAPI('Lead', {
+          content_name: 'Newsletter Signup'
+        }, leadEventId);
+      }
+
+      showToast('Welcome to RunPeak! Check your inbox.');
+      e.target.reset();
+    }
+
+    /* ═══════════════════════════════════════════
+       TOAST NOTIFICATION
+    ═══════════════════════════════════════════ */
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL ANIMATIONS
+    ═══════════════════════════════════════════ */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts('all');
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    });
+
+    /* ═══════════════════════════════════════════
+       META PIXEL: ViewContent on scroll to products
+    ═══════════════════════════════════════════ */
+    let viewContentFired = false;
+    const productObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !viewContentFired) {
+          viewContentFired = true;
+          var viewContentEventId = 'viewcontent_' + Date.now();
+          if (typeof fbq !== 'undefined') {
+            fbq('track', 'ViewContent', {
+              content_name: 'Featured Products Section',
+              content_type: 'product_group'
+            }, { eventID: viewContentEventId });
+          }
+          // Conversions API: ViewContent (same external_id, same event_id for dedup)
+          if (typeof window.__rpk_sendCAPI === 'function') {
+            window.__rpk_sendCAPI('ViewContent', {
+              content_name: 'Featured Products Section',
+              content_type: 'product_group'
+            }, viewContentEventId);
+          }
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const productsSection = document.getElementById('products');
+      if (productsSection) productObserver.observe(productsSection);
+    });
+  </script>
 </body>
 </html>
